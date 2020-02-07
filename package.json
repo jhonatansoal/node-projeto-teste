@@ -1,0 +1,58 @@
+{
+  "name": "jhonatan-teste-api",
+  "version": "1.0.0",
+  "api-version": "c92e9040-896e-11e8-a913-bdabb21e4698",
+  "private": true,
+  "description": "Jhonatan Teste API",
+  "keywords": [],
+  "author": "",
+  "license": "",
+  "main": "app.js",
+  "dependencies": {
+    "cors": "^2.8.4",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.3.0",
+    "lodash": "^4.17.10",
+    "moment": "^2.22.1",
+    "pg": "^7.17.1",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^5.21.3",
+    "swagger-tools": "^0.10.3",
+    "uuid": "^3.2.1",
+    "winston": "^2.4.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.20.0",
+    "jest": "^23.3.0",
+    "nodemon": "^1.15.0",
+    "npm-run-all": "^4.1.1",
+    "pre-git": "^3.17.1",
+    "sequelize-cli": "^5.5.1",
+    "should": "^7.1.0",
+    "supertest": "^1.0.0"
+  },
+  "scripts": {
+    "start": "npm run lint && nodemon app.js --delay 2",
+    "start:local": "set NODE_ENV=local&&npm run lint && nodemon app.js --delay 2",
+    "lint": "eslint .",
+    "test": "swagger project test"
+  },
+  "config": {
+    "pre-git": {
+      "enabled": true,
+      "pre-commit": [
+        "node ./pre-commit.js",
+        "git add package.json"
+      ]
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jhonatansoal/node-projeto-teste.git"
+  },
+  "release": {
+    "analyzeCommits": "simple-commit-message"
+  }
+}

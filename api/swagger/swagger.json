@@ -1,0 +1,415 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.0.1",
+    "title": "-"
+  },
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "Health",
+      "description": "Checks API functionalities."
+    }
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "parameters": {
+    "appToken": {
+      "name": "appToken",
+      "in": "header",
+      "description": "Application Token",
+      "required": true,
+      "type": "string"
+    },
+    "uuid": {
+      "name": "uuid",
+      "in": "path",
+      "description": "Entity unique identifier",
+      "type": "string",
+      "format": "uuid",
+      "required": true
+    },
+    "country": {
+      "name": "country",
+      "in": "header",
+      "description": "Country as defined by ISO-31662",
+      "type": "string",
+      "default": "BR"
+    },
+    "_limit": {
+      "name": "_limit",
+      "in": "query",
+      "description": "Defines the limit of the returned list",
+      "type": "string",
+      "required": false,
+      "default": 200
+    },
+    "_offset": {
+      "name": "_offset",
+      "in": "query",
+      "description": "Current number of the pagination",
+      "type": "string",
+      "required": false,
+      "default": 0
+    }
+  },
+  "paths": {
+    "/health": {
+      "x-swagger-router-controller": "healthCheckController",
+      "get": {
+        "tags": [
+          "Health"
+        ],
+        "summary": "Checks API functionalities.",
+        "description": "The endpoints returns whether the APIs are working or not.",
+        "operationId": "getHealthCheck",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/pessoas": {
+      "x-swagger-router-controller": "pessoaController",
+      "post": {
+        "tags": [
+          "Pessoa"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "descrição",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "type": "string",
+                  "description": "descrição do campo nome"
+                },
+                "email": {
+                  "type": "string",
+                  "format": "email",
+                  "description": "descrição do campo email"
+                }
+              }
+            }
+          }
+        ],
+        "summary": "Checks API functionalities.",
+        "description": "The endpoints returns whether the APIs are working or not.",
+        "operationId": "criarPessoa",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id_pessoa": {
+                    "type": "integer",
+                    "description": "descrição do campo id_pessoa"
+                  },
+                  "nome": {
+                    "type": "string",
+                    "description": "descrição do campo nome"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "descrição do campo email"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request ",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Pessoa"
+        ],
+        "parameters": [
+          {
+            "name": "nome",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Campo nome da pessoa"
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Campo e-mail da pessoa",
+            "format": "email"
+          },
+          {
+            "name": "limite",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "description": "Controle de limite de dados ao consultar as informações - quantidade por pagina"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "description": "Ponteiro da pagina"
+          }
+        ],
+        "summary": "Checks API functionalities.",
+        "description": "The endpoints returns whether the APIs are working or not.",
+        "operationId": "getPessoa",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id_pessoa": {
+                    "type": "integer",
+                    "description": "descrição do campo id_pessoa"
+                  },
+                  "nome": {
+                    "type": "string",
+                    "description": "descrição do campo nome"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "descrição do campo email"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request ",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/pessoas/{idPessoa}": {
+      "x-swagger-router-controller": "pessoaController",
+      "get": {
+        "tags": [
+          "Pessoa"
+        ],
+        "parameters": [
+          {
+            "name": "idPessoa",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "Consultar pelo id_pessoa"
+          }
+        ],
+        "summary": "Checks API functionalities.",
+        "description": "The endpoints returns whether the APIs are working or not.",
+        "operationId": "getUmaPessoa",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id_pessoa": {
+                  "type": "integer",
+                  "description": "descrição do campo id_pessoa"
+                },
+                "nome": {
+                  "type": "string",
+                  "description": "descrição do campo nome"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "descrição do campo email"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request ",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Pessoa"
+        ],
+        "parameters": [
+          {
+            "name": "idPessoa",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "Consultar pelo id_pessoa"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "descrição",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "type": "string",
+                  "description": "descrição do campo nome"
+                },
+                "email": {
+                  "type": "string",
+                  "format": "email",
+                  "description": "descrição do campo email"
+                }
+              }
+            }
+          }
+        ],
+        "summary": "Checks API functionalities.",
+        "description": "The endpoints returns whether the APIs are working or not.",
+        "operationId": "atualizarPessoa",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id_pessoa": {
+                  "type": "integer",
+                  "description": "descrição do campo id_pessoa"
+                },
+                "nome": {
+                  "type": "string",
+                  "description": "descrição do campo nome"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "descrição do campo email"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request ",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/swagger": {
+      "x-swagger-pipe": "swagger_raw"
+    }
+  },
+  "securityDefinitions": {
+    "appToken": {
+      "type": "apiKey",
+      "name": "appToken",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "ErrorResponse": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Error code"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-item",
+            "description": "Date and time of the error"
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message"
+          },
+          "details": {
+            "type": "string",
+            "description": "Details of the error"
+          }
+        }
+      }
+    }
+  }
+}
